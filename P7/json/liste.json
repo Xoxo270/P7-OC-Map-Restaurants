@@ -1,0 +1,66 @@
+[
+    {
+        "restaurantName":"La Zygothèque",
+        "address":"15bis Rue de Tolbiac, 75013 Paris",
+        "lat": 48.862725,
+        "long": 2.287592,
+        "ratings":[
+            {
+                "stars": 5,
+                "comment":"Excellent food and small and quiet place. Love it."
+            },
+            {
+                "stars": 5,
+                "comment":"Waiter spoke perfect English. Very welcoming for tourists. Dishes were delicious and does not harm your wallet. "
+            }
+        ]
+    },
+    {
+        "restaurantName":"Khanchi",
+        "address":"16 Rue de Tolbiac, 75013 Paris",
+        "lat": 48.829626,
+        "long": 2.3748055,
+        "ratings":[
+            {
+                "stars": 5,
+                "comment":"very tasty  food best for indian all Asians very nice staff"
+            },
+            {
+                "stars": 4,
+                "comment":"For an English-man in France this is a good restaurant to eat in.  The menu is very similar to UK Indian restaurants.  Staff are very helpful and friendly. Highly recommended."
+            }
+        ]
+    },
+    {
+        "restaurantName":"ANG Asian Delicacies",
+        "address":"48 Rue du Chevaleret, 75013 Paris",
+        "lat": 48.829,
+        "long": 2.37624,
+        "ratings":[
+            {
+                "stars": 4,
+                "comment":"Good service, nice place"
+            },
+            {
+                "stars": 5,
+                "comment":"C'est un restaurant qui est à faire au moins une fois"
+            }
+        ]
+    },
+    {
+        "restaurantName":"L'Arobase Café",
+        "address":"101 Rue du Chevaleret, 75013 Paris",
+        "lat": 48.8305912,
+        "long": 2.3747005,
+        "ratings":[
+            {
+                "stars": 5,
+                "comment":"Good coffee and good bagels as well!"
+            },
+            {
+                "stars": 5,
+                "comment":"Nice coffee with a cool interior and good service (no table service though)."
+            }
+        ]
+    }
+]

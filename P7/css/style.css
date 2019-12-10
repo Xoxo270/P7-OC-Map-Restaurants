@@ -1,0 +1,57 @@
+/* couleurs */
+
+.color1{
+    background: black;
+    color: white;
+}
+.color2{
+    background: beige;
+    color: black;
+}
+.color3{
+    background: green;
+    color: black;
+}
+.color4{
+    background: red;
+    color: black;
+}
+
+/* tailles */
+
+.w100{
+    width: 100vw;
+}
+.w70{
+    width: 70vw;
+}
+.w30{
+    width: 30vw;
+}
+.h100{
+    height: 100vh;
+}
+.h50{
+    height: 50vh;
+}
+.h20{
+    height: 20%;
+    max-height: 100%;
+    
+}
+
+/* body */
+
+body{
+background: plum;
+margin: 0;
+padding: 0;
+}
+#liste{
+    float: left;
+    max-height: 100%;
+}
+#map{
+    float: right;
+    max-height: 100%;
+}
