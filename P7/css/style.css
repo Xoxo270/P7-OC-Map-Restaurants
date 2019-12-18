@@ -16,17 +16,23 @@
     background: red;
     color: black;
 }
+.hidden{
+    visibility: hidden;
+}
 
 /* tailles */
 
 .w100{
     width: 100vw;
 }
-.w70{
-    width: 70vw;
+.w80{
+    width: 80vw;
 }
 .w30{
     width: 30vw;
+}
+.w20{
+    width: 20vw;
 }
 .h100{
     height: 100vh;
@@ -36,8 +42,10 @@
 }
 .h20{
     height: 20%;
-    max-height: 100%;
-    
+    max-height: 100%; 
+}
+.hide{
+    display: none;
 }
 
 /* body */
@@ -48,6 +56,10 @@ margin: 0;
 padding: 0;
 }
 #liste{
+    float: left;
+    max-height: 100%;
+}
+#menu{
     float: left;
     max-height: 100%;
 }

@@ -1,9 +1,9 @@
 [
     {
         "restaurantName":"La Zygothèque",
-        "address":"15bis Rue de Tolbiac, 75013 Paris",
-        "lat": 48.862725,
-        "long": 2.287592,
+        "address":"15b Rue de Tolbiac, 75013 Paris, France",
+        "lat": 48.8292287992207,
+        "long": 2.3746129031910046,
         "ratings":[
             {
                 "stars": 5,
@@ -32,18 +32,18 @@
         ]
     },
     {
-        "restaurantName":"ANG Asian Delicacies",
-        "address":"48 Rue du Chevaleret, 75013 Paris",
-        "lat": 48.829,
-        "long": 2.37624,
+        "restaurantName":"Nina Sushi",
+        "address":"48 Rue du Chevaleret, 75013 Paris, France",
+        "lat": 48.828942046598236,
+        "long": 2.3762631322874173,
         "ratings":[
             {
-                "stars": 4,
-                "comment":"Good service, nice place"
+                "stars": 5,
+                "comment":"Very good team and ambiance. Its the best  sushi's  restaurant of the quarter ."
             },
             {
                 "stars": 5,
-                "comment":"C'est un restaurant qui est à faire au moins une fois"
+                "comment":"Top"
             }
         ]
     },
