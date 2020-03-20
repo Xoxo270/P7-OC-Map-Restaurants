@@ -4,33 +4,63 @@
     <meta charset="UTF-8">
     <title>Projet 7</title>
     <link rel="stylesheet" type="text/css" href="../css/style.css">
-    <script type="text/javascript" src="../js/global.js"></script>
-    <script type="text/javascript" src="../js/main.js"></script>
-    <script type="text/javascript" src="../js/start.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css"> 
 
 </head>
 <body>
-    <div id="fullScreen" class="h100 w100">  
-        <div id="menu" class="color1 w20 h100">
-            <div id="photo"></div>
-            <div id="nom"></div>
-            <div id="type"></div>
-            <div id="adresse"></div>
-            <div id="horaires"></div>
-            <div id="etoiles"></div>
-
-        </div>
-        <div id="liste" class="color1 w20 h100 hide">
-            <div class="color3 h20">Restaurant 1</div>
-            <div class="color4 h20">Restaurant 2</div>
-            <div class="color3 h20">Restaurant 3</div>
-            <div class="color4 h20">Restaurant 4</div>
-            <div class="color3 h20">Restaurant 5</div>
+    <div id="fullScreen" class="h100 w100">
+        <div id="menu" class="color1 w20 h100 scroll">
+            <div class="ratingBlock">
+                <div class="divNoteMin">
+                    <div id="textNoteMin" class="color1 ta-center">Note min</div>
+                    <div id="noteMin" class="color1 w20"></div>
+                </div>
+                <div class="divNoteMax">
+                    <div id="textNoteMax" class="color1 ta-center">Note max</div>
+                    <div id="noteMax" class="color1 w20"></div>
+                </div>
+            </div>
+            
+            <!-- Modal commentaires -->
+            <div id="modalCom" class="color2 modal">
+                <div class="modal-content">
+                    <span id="spanCom" class="close">&times;</span>
+                    <form id="formulaire1">
+                        <label for="nomForm">Nom :</label><br>
+                        <input type="text" id="nomForm" name="nomForm" class="nomForm" ><br>
+                        <label for="comForm">Commentaire :</label><br>
+                        <input type="text" id="comForm" name="comForm" class="comForm" placeholder="Ecrivez votre commentaire ici"><br><br>
+                        <input type="button" id="sendFormComment" value="Envoyer" >
+                    </form>
+                </div>
+            
+            </div>
+            <!-- Modal restaurants -->
+            <div id="modalResto" class="color2 modal">
+                <div class="modal-content">
+                    <span id="spanResto" class="close">&times;</span>
+                    <form id="formulaire2">
+                        <label for="nomResto">Nom du restaurant :</label><br>
+                        <input type="text" id="nomResto" name="nomFResto" class="nomResto" ><br>
+                        <label for="adresseResto">Adresse :</label><br>
+                        <textarea id="adresseResto" name="adresseResto" class="adresseResto" ></textarea><br>
+                        <label for="typeResto">Types :</label><br>
+                        <input type="text" id="typeResto" name="typeResto" class="typeResto" ><br><br>
+                        <input type="submit" id="sendFormResto" value="Envoyer" >
+                    </form>
+                </div>
+            </div>
+            <div id="listeRestaurants" class=""></div>
         </div>
         <div id="map" class="color2 w80 h100">
         </div>
     </div>            
+    <script type="text/javascript" src="../js/listeResto.js"></script>
+    <script type="text/javascript" src="../js/map.js"></script>
+    <script type="text/javascript" src="../js/start.js"></script>
+    <script type="text/javascript" src="../js/global.js"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9pPh0g-PyI0ci93F2KJxy8v9zQC1TSNE&callback=initMap&libraries=places" type="text/javascript"></script>
 </body>
 </html>
