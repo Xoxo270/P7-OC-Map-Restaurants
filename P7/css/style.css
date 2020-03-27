@@ -52,9 +52,12 @@
 .show {
     display: block;
 }
-.ta-center{
-text-align: center;
+
+.ta-center {
+    text-align: center;
+    font-weight: bold;
 }
+
 /* body */
 
 body {
@@ -78,6 +81,7 @@ body {
     margin-top: 10px;
     margin-bottom: 10px;
 }
+
 .commentDivider {
     /* hr des commentaires*/
     width: 50%;
@@ -103,8 +107,10 @@ body {
 
 .buttonAdd {
     color: black;
+    margin-top: 10px;
 }
-.ratingBlock{
+
+.ratingBlock {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
@@ -209,4 +215,6 @@ img {
 .comForm {
     width: 95%;
     height: 80px;
+    max-width: 100%;
+    max-height: 100%;
 }

@@ -27,11 +27,11 @@
             <div id="modalCom" class="color2 modal">
                 <div class="modal-content">
                     <span id="spanCom" class="close">&times;</span>
-                    <form id="formulaire1">
+                    <form id="formulaire1" autocomplete="off">
                         <label for="nomForm">Nom :</label><br>
                         <input type="text" id="nomForm" name="nomForm" class="nomForm" ><br>
                         <label for="comForm">Commentaire :</label><br>
-                        <input type="text" id="comForm" name="comForm" class="comForm" placeholder="Ecrivez votre commentaire ici"><br><br>
+                        <textarea id="comForm" name="comForm" class="comForm" ></textarea><br><br>
                         <input type="button" id="sendFormComment" value="Envoyer" >
                     </form>
                 </div>
@@ -41,7 +41,7 @@
             <div id="modalResto" class="color2 modal">
                 <div class="modal-content">
                     <span id="spanResto" class="close">&times;</span>
-                    <form id="formulaire2">
+                    <form id="formulaire2" autocomplete="off">
                         <label for="nomResto">Nom du restaurant :</label><br>
                         <input type="text" id="nomResto" name="nomFResto" class="nomResto" ><br>
                         <label for="adresseResto">Adresse :</label><br>

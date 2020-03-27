@@ -1,4 +1,16 @@
 class Liste {
+/*  constructor(icon,name,vicinity,types,note,reviews,streetview,addbutton) {
+    this.icon = icon;
+    this.name = name;
+    this.vicinity = vicinity;
+    this.types = types;
+    this.note = note;
+    this.reviews = reviews;
+    this.streetview = streetview;
+    this.addbutton = addbutton;
+
+  } */
+
   addReviews(result, status) {
     if (status === google.maps.places.PlacesServiceStatus.OK) {
       let tblReview = `<p>Aucun commentaire(s) !</p>`;
@@ -30,13 +42,14 @@ class Liste {
     </div>`);
 
     $(`.note[pid=${place.place_id}]`).rateYo({
-      rating: place.rating
+      rating: place.rating,
+      readOnly: true
     });
     this.showModalComment(place);
   }
 
   filterResto() {
-    $('.resto').each((i,e) => {
+    $('.resto').each((i, e) => {
       let ratingNB = parseFloat($(e).attr("rating"));
       if (ratingNB < notemini || ratingNB > notemaxi || isNaN(ratingNB)) {
         $(e).parent().hide();
@@ -54,7 +67,7 @@ class Liste {
   }
 
   clicResto(restaurants) {
-    $(".resto").on("click", (e) => {
+    $(document).on("click",'.resto', (e) => {
       let target = e.target;
       let targetinfos = $('.infos[pid="' + $(target).attr("pid") + '"] ');
       var request = {
@@ -94,38 +107,14 @@ class Liste {
       $('.reviews[pid="' + $(this).attr("pid") + '"]').append('<p>' + nom + '<p><p>' + comment + '<p>')
     })
   }
-  /* essai1(){   
-     $(span).on('click', () => {
-      $(modal).hide();
-    })
-    $(document).on('click', (event) => {
-      if ($(event.target).is(modal)) {
-        $(modal).hide();
-      }
-    })
-     $(btn).on('click', () => {
-      $(modal).hide();
-    }) 
-  } */
-  showModalComment(place) {
-    let btn = $('#sendFormComment');
-    let modal = $('#modalCom');
-    let span = $('#spanCom');
+/*   modalFunction() { 
+    let btn;
+    let modal;
+    let span;
 
-    /* Le click sur le bouton déclenche l'apparition du modal */
-    $(`.buttonAdd[pid='${place.place_id}']`).on('click', () => {
-      $(modal).show();
-      let pidform = $(this).attr('pid');
-      $('#formulaire').attr('pid', pidform);
-    })
-    /* this.essai1(); */
-
-    /* Le click sur le span ou sur le bouton fait disparaitre le modal */
     $(span).on('click', () => {
       $(modal).hide();
     })
-
-    /* Le click en dehors de la fenêtre fait disparaitre le modal */
     $(document).on('click', (event) => {
       if ($(event.target).is(modal)) {
         $(modal).hide();
@@ -134,23 +123,60 @@ class Liste {
     $(btn).on('click', () => {
       $(modal).hide();
     })
+  } */
+  showModalComment(place) {
+    /* modal commentaires */
+    let btn = $('#sendFormComment');
+    let modal = $('#modalCom');
+    let span = $('#spanCom');
+
+    $(`.buttonAdd[pid='${place.place_id}']`).off('click')
+    $(`.buttonAdd[pid='${place.place_id}']`).on('click', () => {
+      $(modal).show();
+      let pidform = $(this).attr('pid');
+      $('#formulaire').attr('pid', pidform);
+    })
+
+    /* $(span).off('click'); */
+    $(span).on('click', () => {
+      $(modal).hide();
+    })
+    /* $(document).off('click'); */
+    $(document).on('click', (event) => {
+      if ($(event.target).is(modal)) {
+        $(modal).hide();
+      }
+    })
+    $(btn).off('click');
+    $(btn).on('click', () => {
+      $(modal).hide();
+    })
   }
 
   showModalResto() {
+    /* modal restaurants */
     let btn = $("#sendFormResto");
     let modal = $("#modalResto");
     let span = $("#spanResto");
 
+    /* Reset valeur modal resto */
+    $('#nomResto').val('');
+    $('#adresseResto').val('');
+    $('#typeResto').val('');
+
     $(modal).show();
 
+    $(span).off('click');
     $(span).on('click', () => {
       $(modal).hide();
     })
     $(document).on('click', (event) => {
       if ($(event.target).is(modal)) {
         $(modal).hide();
+        /* trouver comment mettre un $(document).off('click'); sans que ca enlève tous les clicks */
       }
     })
+    $(btn).off('click');
     $(btn).on('click', () => {
       $(modal).hide();
     })
@@ -178,15 +204,44 @@ class Liste {
   }
 }
 
+
+/* showModalComment(place) { 
+  let btn = $('#sendFormComment');
+  let modal = $('#modalCom');
+  let span = $('#spanCom');
+  Le click sur le bouton déclenche l'apparition du modal
+  $(`.buttonAdd[pid='${place.place_id}']`).on('click', () => {
+      $(modal).show();
+      let pidform = $(this).attr('pid');
+      $('#formulaire').attr('pid', pidform);
+    })
+    
+
+   Le click sur le span ou sur le bouton fait disparaitre le modal
+   $(span).on('click', () => {
+      $(modal).hide();
+    })
+
+    Le click en dehors de la fenêtre fait disparaitre le modal
+     $(document).on('click', (event) => {
+      if ($(event.target).is(modal)) {
+        $(modal).hide();
+      }
+    })
+    $(btn).on('click', () => {
+      $(modal).hide();
+    })
+
+}*/
+
+
+
+
 /*
-- Un formulaire pour ajouter un restaurant lorsqu'on clique sur la carte.
 - Faire du css pour rendre le tout plus beau.
 - POO.
-
 - faire des constructor pour les commentaires et pour les restos ?
-
-- virer les variables globales.
-- enlever les restos de la liste quand ils ne correspondent pas aux critères du filtre étoiles.
+- virer les variables globales ?
 */
 
 
@@ -201,9 +256,10 @@ streetview
 
 
 /* ce qu'on a fait cette semaine :
-- Débugage ( beaucoup ).
-- Tests de fonction réutilisable.
-- débug de la liste des restos qui ne s'affichait pas ( covid qui fait fermer les restos )
-- débug du filtre RateYo.
-- Ajout d'un if/else dans add/reviews pour vérifier si result.review est undefined.
+- fonction réutilisable pour la fermeture des modals. (pas tout à fait fonctionelle)
+- bloquer le clic sur les étoiles de la liste resto.
+- on travaille sur un constructeur.
+- 
+- 
+- 
 */
