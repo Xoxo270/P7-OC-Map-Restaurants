@@ -48,6 +48,7 @@ class MiseEnRoute {
     this.liste.formComment();
     this.liste.selectRatingMin();
     this.liste.selectRatingMax();
+/*     this.mapObjet.formCommentY(); */
 
     $.getJSON("./../json/liste.json", (data) => {
       let items = [];

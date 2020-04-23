@@ -29,10 +29,12 @@
                     <span id="spanCom" class="close">&times;</span>
                     <form id="formulaire1" autocomplete="off">
                         <label for="nomForm">Nom :</label><br>
-                        <input type="text" id="nomForm" name="nomForm" class="nomForm" ><br>
+                        <input type="text" id="nomForm" name="nomForm" class="nomForm" required ><br>
+                        <label for="noteForm">Note :</label><br>
+                        <input type="number" id="noteForm" name="noteForm" class="noteForm" min="0" max="5" required ><br>
                         <label for="comForm">Commentaire :</label><br>
-                        <textarea id="comForm" name="comForm" class="comForm" ></textarea><br><br>
-                        <input type="button" id="sendFormComment" value="Envoyer" >
+                        <textarea id="comForm" name="comForm" class="comForm" required ></textarea><br><br>
+                        <input type="submit" id="sendFormComment" value="Envoyer" >
                     </form>
                 </div>
             
@@ -43,11 +45,11 @@
                     <span id="spanResto" class="close">&times;</span>
                     <form id="formulaire2" autocomplete="off">
                         <label for="nomResto">Nom du restaurant :</label><br>
-                        <input type="text" id="nomResto" name="nomFResto" class="nomResto" ><br>
+                        <input type="text" id="nomResto" name="nomFResto" class="nomResto" required><br>
                         <label for="adresseResto">Adresse :</label><br>
-                        <textarea id="adresseResto" name="adresseResto" class="adresseResto" ></textarea><br>
+                        <textarea id="adresseResto" name="adresseResto" class="adresseResto" required></textarea><br>
                         <label for="typeResto">Types :</label><br>
-                        <input type="text" id="typeResto" name="typeResto" class="typeResto" ><br><br>
+                        <input type="text" id="typeResto" name="typeResto" class="typeResto" required><br><br>
                         <input type="submit" id="sendFormResto" value="Envoyer" >
                     </form>
                 </div>

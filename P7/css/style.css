@@ -48,6 +48,9 @@
 .hide {
     display: none;
 }
+.toshow{
+    display: block !important;
+}
 
 .show {
     display: block;
