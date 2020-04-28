@@ -37,7 +37,7 @@ class Liste {
       rating: place.rating,
       readOnly: true
     });
-    this.showModalComment(place);
+    this.showModalComment(place.place_id);
   }
 
   filterResto() {
@@ -98,22 +98,21 @@ class Liste {
       $('#modalCom').hide();
     })
   }
-  showModalComment(place) {
+  showModalComment(place_id) {
     /* modal commentaires */
     let btn = $('#sendFormComment');
     let modal = $('#modalCom');
     let span = $('#spanCom');
-    console.log("place : ", place);
 
-    $(`.buttonAdd[pid='${place.place_id}']`).off('click')
-    $(`.buttonAdd[pid='${place.place_id}']`).on('click', (e) => {
+    $(`.buttonAdd[pid='${place_id}']`).off('click')
+    $(`.buttonAdd[pid='${place_id}']`).on('click', (e) => {
       /* Reset valeur modal commentaire */
       $('#nomForm').val('');
       $('#comForm').val('');
 
-      $('#formulaire1').attr('pid', place.place_id);
+      $('#formulaire1').attr('pid', place_id);
       $(modal).show();
-      let pidform = $(this).attr('pid');
+      let pidform = $(e).attr('pid');
       $('#formulaire').attr('pid', pidform);
     })
 

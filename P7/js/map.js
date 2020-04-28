@@ -113,7 +113,8 @@ class MapClass {
     infoWindow.open(map);
   }
 
-  listenClickAdd(place_id) {
+  listenClickAdd(place_id) { 
+    /* supprimer cette classe en gardant this.liste.formComment() et en appelant showmodalComment à la place*/
     let btn = $('#sendFormComment');
     let modal = $('#modalCom');
     let span = $('#spanCom');
