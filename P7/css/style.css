@@ -1,4 +1,4 @@
-/* couleurs */
+/* couleurs et affichage */
 
 .color1 {
     background: #1b1b1e;
@@ -14,7 +14,29 @@
     visibility: hidden;
 }
 
+.show {
+    display: block;
+}
+
+.hide {
+    display: none;
+}
+
+.toshow {
+    display: block !important;
+}
+
+/* Curseur */
+
+h1,button{
+    cursor: pointer;
+}
+
 /* tailles */
+
+.mwidth100 {
+    max-width: 100%;
+}
 
 .w100 {
     width: 100vw;
@@ -45,20 +67,8 @@
     max-height: 100%;
 }
 
-.hide {
-    display: none;
-}
-.toshow{
-    display: block !important;
-}
-
-.show {
-    display: block;
-}
-
-.ta-center {
-    text-align: center;
-    font-weight: bold;
+.capitalize{
+    text-transform: capitalize;
 }
 
 /* body */
@@ -85,8 +95,7 @@ body {
     margin-bottom: 10px;
 }
 
-.commentDivider {
-    /* hr des commentaires*/
+.commentDivider { /* hr des commentaires*/
     width: 50%;
 }
 
@@ -102,6 +111,11 @@ body {
 
 .resto {
     margin-left: 4px;
+}
+
+.ta-center {
+    text-align: center;
+    font-weight: bold;
 }
 
 .scroll {
@@ -132,10 +146,6 @@ h1 {
 
 img {
     max-width: 99%;
-}
-
-.toto {
-    max-width: 100%;
 }
 
 .commentPlaces {

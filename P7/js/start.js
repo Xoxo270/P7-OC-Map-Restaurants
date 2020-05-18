@@ -2,29 +2,35 @@ class MiseEnRoute {
   constructor(mapObjet, liste) {
     this.mapObjet = mapObjet;
     this.liste = liste;
+    /* coordonnées par défaut */
     let fallBackPosition = {
       coords: {
         lat: 48.8344643,
         lng: 2.3769014
       }
     }
+    /* Géolocalisation si possible */
     if (navigator.geolocation) {
+      /* si on accepte la géolocalisation et qu'il trouve notre position */
       navigator.geolocation.getCurrentPosition((position) => {
         this.initialize(position);
       }, () => {
+        /* si on a accepté et qu'il trouve pas */
         this.initialize(fallBackPosition);
       });
     } else {
+      /* si on refuse la géolocalisation */
       this.initialize(fallBackPosition);
     }
   }
 
+  /* Initialisation de la map et récupération des restaurants à proximité */
   initialize(position) {
     let request = {
-      radius: '2000',
+      radius: '1000',
       type: ['restaurant']
     };
-    var pos = {
+    let pos = {
       lat: position.coords.latitude,
       lng: position.coords.longitude
     };
@@ -44,23 +50,67 @@ class MiseEnRoute {
     infoWindow.setPosition(pos);
     infoWindow.setContent('Localisation trouvée.');
     infoWindow.open(map);
+
     this.mapObjet.clickMap();
     this.liste.formComment();
     this.liste.selectRatingMin();
     this.liste.selectRatingMax();
-/*     this.mapObjet.formCommentY(); */
 
+    /* Récupération des restaurants dans le json et ajout sur la carte */
     $.getJSON("./../json/liste.json", (data) => {
-      let items = [];
-      data.forEach((key) => {
+      data.forEach((id) => {
         let tbl = {
-          lat: key.lat,
-          lng: key.long
+          lat: id.lat,
+          lng: id.long
         };
-        new google.maps.Marker({
+
+        let newMarker = new google.maps.Marker({
           position: tbl,
-          map: map
+          map: map,
+          title: id.restaurantName
         });
+
+        let popupinfos = `<div id="content"><h1>${id.restaurantName}</h1>
+        <div> ${id.address}</div></div>`;
+        newMarker.infowindow = new google.maps.InfoWindow({
+          content: popupinfos
+        });
+
+        newMarker.addListener('click', function () {
+          markers.forEach(marker => {
+            marker.marker.infowindow.close();
+          })
+          newMarker.infowindow.open(map, newMarker);
+        });
+        markers.push({
+          marker: newMarker
+        })
+      
+        const newpid = this.mapObjet.makeid(20);
+        $('#listeRestaurants').append(`
+          <div class='divResto'>
+          <hr>
+          <img src="https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png">
+          <h1 class='resto' pid='${newpid}'>${id.restaurantName}</h1>
+          <div class='infos hide' pid='${newpid}'>
+          <p>Adresse : ${id.address}</p>
+          <div class='infos note' pid='${newpid}'></div>
+          <div class='infos reviews hide' pid='${newpid}'>${id.address}</div>
+          <img class='infos hide' src='https://maps.googleapis.com/maps/api/streetview?size=600x300&location=${tbl.lat},${tbl.lng}&key=AIzaSyD9pPh0g-PyI0ci93F2KJxy8v9zQC1TSNE' pid='${newpid}'/>
+          <button class='infos hide buttonAdd' pid='${newpid}' type='button'>Ajouter un commentaire</button>
+          </div>`)
+
+        let tblReview = `<p>Aucun commentaire(s) !</p>`;
+        if (id.ratings !== undefined) {
+          tblReview = '';
+          id.ratings.forEach((ratings) => {
+            tblReview += `<div class="commentPlaces"><p><img class="profilePic" src="https://lh6.ggpht.com/-wiU-cqAjhwY/AAAAAAAAAAI/AAAAAAAAAAA/AT9mW9moABY/s128-c0x00000000-cc-rp-mo-ba3/photo.jpg"></p>
+              <p class="ratingClient">${ratings.stars}/5 - ${ratings.comment}</p><hr class="commentDivider"></div>`;
+            })
+        }
+        $(`.infos.reviews[pid="${newpid}"]`).append(`${tblReview}`);
+        this.liste.showModalComment(newpid);
+        this.liste.formComment();
       });
     })
   }
