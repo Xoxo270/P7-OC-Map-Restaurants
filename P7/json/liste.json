@@ -4,6 +4,7 @@
         "address":"15b Rue de Tolbiac, 75013 Paris, France",
         "lat": 48.8292287992207,
         "long": 2.3746129031910046,
+        "note": 5,
         "ratings":[
             {
                 "stars": 5,
@@ -20,6 +21,7 @@
         "address":"16 Rue de Tolbiac, 75013 Paris",
         "lat": 48.829626,
         "long": 2.3748055,
+        "note": 4.5,
         "ratings":[
             {
                 "stars": 5,
@@ -36,6 +38,7 @@
         "address":"48 Rue du Chevaleret, 75013 Paris, France",
         "lat": 48.828942046598236,
         "long": 2.3762631322874173,
+        "note": 5,
         "ratings":[
             {
                 "stars": 5,
@@ -52,6 +55,7 @@
         "address":"101 Rue du Chevaleret, 75013 Paris",
         "lat": 48.8305912,
         "long": 2.3747005,
+        "note": 5,
         "ratings":[
             {
                 "stars": 5,

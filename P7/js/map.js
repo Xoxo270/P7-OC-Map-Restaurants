@@ -1,47 +1,6 @@
 class MapClass {
-  constructor(liste,miseEnRoute) {
+  constructor(liste) {
     this.liste = liste;
-    this.miseEnRoute = miseEnRoute;
-  }
-  /* création des markers sur la carte + popup avec infos lorsqu'on clique dessus*/
-  createMarker(place) {
-    let popupinfos = `<div id="content"><h1>${place.name}</h1>
-    <div> ${place.vicinity}</div>
-    <div>${place.types.join(', ')}</div> </div>`;
-    let tbl = {
-      lat: place.geometry.location.lat(),
-      lng: place.geometry.location.lng()
-    };
-    let newMarker = new google.maps.Marker({
-      position: tbl,
-      map: map,
-    })
-    newMarker.infowindow = new google.maps.InfoWindow({
-      content: popupinfos
-    });
-    newMarker.addListener('click', function () {
-      markers.forEach(marker => {
-        marker.marker.infowindow.close();
-      })
-      newMarker.infowindow.open(map, newMarker);
-    });
-    markers.push({
-      rating: place.rating,
-      marker: newMarker
-    })
-  }
-
-  /*  */
-  callback(results, status) {
-    if (status === google.maps.places.PlacesServiceStatus.OK) {
-      restaurants = results;
-      for (let i = 0; i < results.length; i++) {
-        const place = results[i];
-        this.createMarker(place);
-        this.liste.listeRestos(place);
-      }
-      this.liste.clicResto(restaurants)
-    }
   }
 
   /* fonction qui écoute le clic de la map et en récupère les coordonnées */
@@ -83,6 +42,34 @@ class MapClass {
     })
   }
 
+  /* création des markers sur la carte + popup avec infos lorsqu'on clique dessus */
+  createMarker(place) {
+    let popupinfos = `<div id="content"><h1>${place.name}</h1>
+    <div> ${place.vicinity}</div>
+    <div>${place.types.join(', ')}</div> </div>`;
+    let tbl = {
+      lat: place.geometry.location.lat(),
+      lng: place.geometry.location.lng()
+    };
+    let newMarker = new google.maps.Marker({
+      position: tbl,
+      map: map,
+    })
+    newMarker.infowindow = new google.maps.InfoWindow({
+      content: popupinfos
+    });
+    newMarker.addListener('click', function () {
+      markers.forEach(marker => {
+        marker.marker.infowindow.close();
+      })
+      newMarker.infowindow.open(map, newMarker);
+    });
+    markers.push({
+      rating: place.rating,
+      marker: newMarker
+    })
+  }
+
   /* Création d'un place_id pour les nouveaux restaurants */
   makeid(length) {
     var result = '';
@@ -94,7 +81,7 @@ class MapClass {
     return result;
   }
 
-  /* Reset des valeurs du modal et écoute du clic pour faire disparaitre le modal */
+  /* Reset des valeurs du modal et écoute du clic pour faire apparaitre/disparaitre le modal */
   showModalResto() {
     let btn = $("#sendFormResto");
     let modal = $("#modalResto");
@@ -125,7 +112,6 @@ class MapClass {
       map: map,
       title: name
     });
-    /* recentre la carte sur latLng */
     map.panTo(latLng);
   }
 
@@ -137,5 +123,4 @@ class MapClass {
       'Erreur: Votre navigateur ne supporte pas la géolocalisation.');
     infoWindow.open(map);
   }
-
 }

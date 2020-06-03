@@ -1,6 +1,30 @@
 class Liste {
-  constructor(mapObjet) {
-    this.mapObjet = mapObjet;
+   setMapObjet(mapObjet){
+     this.mapObjet = mapObjet;
+   }
+
+  /* Ajout des restaurants récupérés avec l'Api Places */
+  listeRestos(place) {
+    $("#listeRestaurants").append(`
+    <div class='divResto'>
+      <hr>
+      <div class='resto' pid='${place.place_id}' rating='${place.rating}' ><img src="${place.icon}"></div>
+      <h1 class='resto' pid='${place.place_id}' rating='${place.rating}' >${place.name}</h1>
+      <div class='infos hide' pid='${place.place_id}'>
+        <p class="mwidth100">Adresse : ${place.vicinity}</p>
+        <p class="mwidth100">Types: ${place.types.join(', ')}</p>
+      </div>
+      <div class='infos note' pid='${place.place_id}'></div>
+      <div class='infos reviews hide' pid='${place.place_id}'></div>
+      <img class='infos hide' pid='${place.place_id}' src='https://maps.googleapis.com/maps/api/streetview?size=600x300&location=${place.geometry.location.lat()},${place.geometry.location.lng()}&key=AIzaSyD9pPh0g-PyI0ci93F2KJxy8v9zQC1TSNE'/>
+      <button class='infos hide buttonAdd' pid='${place.place_id}' type='button'>Ajouter un commentaire</button>
+    </div>`);
+
+    $(`.note[pid=${place.place_id}]`).rateYo({
+      rating: place.rating,
+      readOnly: true
+    });
+    this.showModalComment(place.place_id);
   }
 
   /* Ajout des commentaires pour chaque restaurant */
@@ -11,36 +35,14 @@ class Liste {
         tblReview = '';
         result.reviews.forEach((review) => {
           tblReview += `<div class="commentPlaces"><p><img class="profilePic" src="${review.profile_photo_url}"> ${review.author_name}</p>
-            <p class="ratingClient">${review.rating}/5 -
-            ${review.text}</p><hr class="commentDivider"></div>`;
+          <p class="ratingClient">${review.rating}/5 -
+          ${review.text}</p><hr class="commentDivider"></div>`;
         });
       }
       $(`.infos.reviews[pid="${result.place_id}"]`).html(`${tblReview}`);
     }
   }
 
-  /* Ajout des restaurants récupérés avec l'Api Places */
-  listeRestos(place) {
-    $("#listeRestaurants").append(`
-    <div class='divResto'>
-    <hr>
-    <div class='resto' pid='${place.place_id}' rating='${place.rating}' ><img src="${place.icon}"></div>
-    <h1 class='resto' pid='${place.place_id}' rating='${place.rating}' >${place.name}</h1>
-    <div class='infos hide' pid='${place.place_id}'><p class="mwidth100">Adresse : ${place.vicinity}</p>
-    <p class="mwidth100">Types: ${place.types.join(', ')}</p>
-    </div>
-    <div class='infos note' pid='${place.place_id}'></div>
-    <div class='infos reviews hide' pid='${place.place_id}'></div>
-    <img class='infos hide' pid='${place.place_id}' src='https://maps.googleapis.com/maps/api/streetview?size=600x300&location=${place.geometry.location.lat()},${place.geometry.location.lng()}&key=AIzaSyD9pPh0g-PyI0ci93F2KJxy8v9zQC1TSNE'/>
-    <button class='infos hide buttonAdd' pid='${place.place_id}' type='button'>Ajouter un commentaire</button>
-    </div>`);
-
-    $(`.note[pid=${place.place_id}]`).rateYo({
-      rating: place.rating,
-      readOnly: true
-    });
-    this.showModalComment(place.place_id);
-  }
 
   /* filtre à étoiles pour la liste des restaurants et les markers sur la carte */
   filterResto() {
@@ -61,23 +63,19 @@ class Liste {
     })
   }
 
-  /* Afficher/Cacher les infos du restaurant et récupérer les détails grâce à l'api */
+  /* Afficher/Cacher les infos du restaurant & récupérer les détails grâce à l'api */
   clicResto(restaurants) {
     $(document).on("click", '.resto', (e) => {
       let target = e.target;
-      let targetinfos = $('.infos[pid="' + $(target).attr("pid") + '"]');
       var request = {
         placeId: $(target).attr("pid"),
         fields: ['opening_hours', 'rating', 'reviews', 'place_id']
       }
-      var resto = restaurants.filter((restaurant) => {
-        return restaurant.place_id == $(target).attr("pid");
-      })
-      let place = resto[0];
 
       $('.hide[pid="' + $(target).attr("pid") + '"]').toggleClass('toshow');
 
       $(`.infos.reviews[pid="${target.place_id}"]`).rateYo(`${request.rating}`);
+
       service.getDetails(request, this.addReviews);
     })
   }
@@ -112,9 +110,8 @@ class Liste {
       $('#comForm').val('');
 
       $('#formulaire1').attr('pid', place_id);
+
       $(modal).show();
-      let pidform = $(e).attr('pid');
-      $('#formulaire').attr('pid', pidform);
     })
 
     $(span).off('click');
@@ -127,6 +124,20 @@ class Liste {
       }
     })
   }
+
+  /* Création de markers et ajout de restaurants pour chaque résultat de l'api */
+    addApiResults(results, status) {
+      if (status === google.maps.places.PlacesServiceStatus.OK) {
+        restaurants = results;
+        for (let i = 0; i < results.length; i++) {
+          const place = results[i];
+          this.mapObjet.createMarker(place);
+          this.listeRestos(place);
+        }
+        this.clicResto(restaurants)
+      }
+    }
+
   /* Sélecteur note minimale et maximale */
   selectRatingMin() {
     $(() => {

@@ -11,15 +11,12 @@ class MiseEnRoute {
     }
     /* Géolocalisation si possible */
     if (navigator.geolocation) {
-      /* si on accepte la géolocalisation et qu'il trouve notre position */
       navigator.geolocation.getCurrentPosition((position) => {
         this.initialize(position);
       }, () => {
-        /* si on a accepté et qu'il trouve pas */
         this.initialize(fallBackPosition);
       });
     } else {
-      /* si on refuse la géolocalisation */
       this.initialize(fallBackPosition);
     }
   }
@@ -44,7 +41,7 @@ class MiseEnRoute {
     service = new google.maps.places.PlacesService(map);
     request.location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
     service.nearbySearch(request, (results, status) => {
-      this.mapObjet.callback(results, status)
+        this.liste.addApiResults(results, status)
     });
 
     infoWindow.setPosition(pos);
@@ -85,20 +82,27 @@ class MiseEnRoute {
         markers.push({
           marker: newMarker
         })
-      
+
         const newpid = this.mapObjet.makeid(20);
+
         $('#listeRestaurants').append(`
           <div class='divResto'>
-          <hr>
-          <img src="https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png">
-          <h1 class='resto' pid='${newpid}'>${id.restaurantName}</h1>
-          <div class='infos hide' pid='${newpid}'>
-          <p>Adresse : ${id.address}</p>
-          <div class='infos note' pid='${newpid}'></div>
-          <div class='infos reviews hide' pid='${newpid}'>${id.address}</div>
-          <img class='infos hide' src='https://maps.googleapis.com/maps/api/streetview?size=600x300&location=${tbl.lat},${tbl.lng}&key=AIzaSyD9pPh0g-PyI0ci93F2KJxy8v9zQC1TSNE' pid='${newpid}'/>
-          <button class='infos hide buttonAdd' pid='${newpid}' type='button'>Ajouter un commentaire</button>
+            <hr>
+            <div class='resto' pid='${newpid}' ><img src="https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png"></div>
+            <h1 class='resto' pid='${newpid}'>${id.restaurantName}</h1>
+            <div class='infos hide' pid='${newpid}'>
+              <p>Adresse : ${id.address}</p>
+            </div>
+            <div class='infos note' pid='${newpid}'></div>
+            <div class='infos reviews hide' pid='${newpid}'>${id.address}</div>
+            <img class='infos hide' src='https://maps.googleapis.com/maps/api/streetview?size=600x300&location=${tbl.lat},${tbl.lng}&key=AIzaSyD9pPh0g-PyI0ci93F2KJxy8v9zQC1TSNE' pid='${newpid}'/>
+            <button class='infos hide buttonAdd' pid='${newpid}' type='button'>Ajouter un commentaire</button>
           </div>`)
+
+        $(`.note[pid=${newpid}]`).rateYo({
+          rating: id.note,
+          readOnly: true
+        });
 
         let tblReview = `<p>Aucun commentaire(s) !</p>`;
         if (id.ratings !== undefined) {
@@ -106,9 +110,10 @@ class MiseEnRoute {
           id.ratings.forEach((ratings) => {
             tblReview += `<div class="commentPlaces"><p><img class="profilePic" src="https://lh6.ggpht.com/-wiU-cqAjhwY/AAAAAAAAAAI/AAAAAAAAAAA/AT9mW9moABY/s128-c0x00000000-cc-rp-mo-ba3/photo.jpg"></p>
               <p class="ratingClient">${ratings.stars}/5 - ${ratings.comment}</p><hr class="commentDivider"></div>`;
-            })
+          })
         }
         $(`.infos.reviews[pid="${newpid}"]`).append(`${tblReview}`);
+
         this.liste.showModalComment(newpid);
         this.liste.formComment();
       });
