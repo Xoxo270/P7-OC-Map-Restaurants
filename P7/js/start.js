@@ -10,7 +10,6 @@ class MiseEnRoute {
         lng: 2.3769014
       }
     }
-    console.log(fallBackPosition);
     map = new google.maps.Map(document.getElementById('map'), {
       center: {
         lat: fallBackPosition.coords.lat,
@@ -25,11 +24,11 @@ class MiseEnRoute {
         this.initialize(position);
       }, () => {
         this.initialize(fallBackPosition);
-        this.mapObjet.handleLocationError(true, infoWindow, fallBackPosition);
+        this.mapObjet.handleLocationError(true, infoWindow, fallBackPosition.coords);
       });
     } else {
       this.initialize(fallBackPosition);
-      this.mapObjet.handleLocationError(false, infoWindow, fallBackPosition);
+      this.mapObjet.handleLocationError(false, infoWindow, fallBackPosition.coords);
     }
   }
 
@@ -40,18 +39,18 @@ class MiseEnRoute {
       type: ['restaurant']
     };
     let pos = {
-      lat: position.coords.lat,
-      lng: position.coords.long
+        lat: position.coords.lat,
+        lng: position.coords.lng
     };
     infoWindow = new google.maps.InfoWindow;
 
     map = new google.maps.Map(document.getElementById('map'), {
-      center: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+      center: new google.maps.LatLng(position.coords.lat, position.coords.lng),
       zoom: 15
     });
 
     service = new google.maps.places.PlacesService(map);
-    request.location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+    request.location = new google.maps.LatLng(position.coords.lat, position.coords.lng);
     service.nearbySearch(request, (results, status) => {
       this.liste.addApiResults(results, status)
     });
