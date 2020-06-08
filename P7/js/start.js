@@ -3,21 +3,33 @@ class MiseEnRoute {
     this.mapObjet = mapObjet;
     this.liste = liste;
     /* coordonnées par défaut */
+
     let fallBackPosition = {
       coords: {
         lat: 48.8344643,
         lng: 2.3769014
       }
     }
+    console.log(fallBackPosition);
+    map = new google.maps.Map(document.getElementById('map'), {
+      center: {
+        lat: fallBackPosition.coords.lat,
+        lng: fallBackPosition.coords.lng
+      },
+      zoom: 15
+    });
+
     /* Géolocalisation si possible */
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
         this.initialize(position);
       }, () => {
         this.initialize(fallBackPosition);
+        this.mapObjet.handleLocationError(true, infoWindow, fallBackPosition);
       });
     } else {
       this.initialize(fallBackPosition);
+      this.mapObjet.handleLocationError(false, infoWindow, fallBackPosition);
     }
   }
 
@@ -28,10 +40,10 @@ class MiseEnRoute {
       type: ['restaurant']
     };
     let pos = {
-      lat: position.coords.latitude,
-      lng: position.coords.longitude
+      lat: position.coords.lat,
+      lng: position.coords.long
     };
-    let infoWindow = new google.maps.InfoWindow;
+    infoWindow = new google.maps.InfoWindow;
 
     map = new google.maps.Map(document.getElementById('map'), {
       center: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
@@ -41,7 +53,7 @@ class MiseEnRoute {
     service = new google.maps.places.PlacesService(map);
     request.location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
     service.nearbySearch(request, (results, status) => {
-        this.liste.addApiResults(results, status)
+      this.liste.addApiResults(results, status)
     });
 
     infoWindow.setPosition(pos);
@@ -119,5 +131,4 @@ class MiseEnRoute {
       });
     })
   }
-
 }

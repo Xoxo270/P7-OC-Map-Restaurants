@@ -4,6 +4,7 @@ var restaurants;
 var notemini;
 var notemaxi;
 var markers = [];
+var infoWindow;
 
 
 /* instanciation des class JS */
