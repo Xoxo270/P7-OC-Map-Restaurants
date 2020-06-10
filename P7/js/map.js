@@ -117,6 +117,7 @@ class MapClass {
 
   /* Fonction pour la géolocalisation et l'envoi de messages d'erreur */
   handleLocationError(browserHasGeolocation, infoWindow, pos) {
+    console.log(pos);
     infoWindow.setPosition(pos);
     infoWindow.setContent(browserHasGeolocation ?
       'Erreur: La géolocalisation a échouée.' :

@@ -6,14 +6,14 @@ class MiseEnRoute {
 
     let fallBackPosition = {
       coords: {
-        lat: 48.8344643,
-        lng: 2.3769014
+        latitude: 48.8344643,
+        longitude: 2.3769014
       }
     }
     map = new google.maps.Map(document.getElementById('map'), {
       center: {
-        lat: fallBackPosition.coords.lat,
-        lng: fallBackPosition.coords.lng
+        lat: fallBackPosition.coords.latitude,
+        lng: fallBackPosition.coords.longitude
       },
       zoom: 15
     });
@@ -24,11 +24,11 @@ class MiseEnRoute {
         this.initialize(position);
       }, () => {
         this.initialize(fallBackPosition);
-        this.mapObjet.handleLocationError(true, infoWindow, fallBackPosition.coords);
+        this.mapObjet.handleLocationError(true, infoWindow, fallBackPosition);
       });
     } else {
       this.initialize(fallBackPosition);
-      this.mapObjet.handleLocationError(false, infoWindow, fallBackPosition.coords);
+      this.mapObjet.handleLocationError(false, infoWindow, fallBackPosition);
     }
   }
 
@@ -39,18 +39,19 @@ class MiseEnRoute {
       type: ['restaurant']
     };
     let pos = {
-        lat: position.coords.lat,
-        lng: position.coords.lng
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
     };
     infoWindow = new google.maps.InfoWindow;
 
-    map = new google.maps.Map(document.getElementById('map'), {
-      center: new google.maps.LatLng(position.coords.lat, position.coords.lng),
+    map = new google.maps.Map(document.getElementById('map'),{ 
+      center: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
       zoom: 15
     });
+    console.log(position);
 
     service = new google.maps.places.PlacesService(map);
-    request.location = new google.maps.LatLng(position.coords.lat, position.coords.lng);
+    request.location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
     service.nearbySearch(request, (results, status) => {
       this.liste.addApiResults(results, status)
     });
