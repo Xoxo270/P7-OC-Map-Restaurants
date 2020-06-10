@@ -24,11 +24,17 @@ class MiseEnRoute {
         this.initialize(position);
       }, () => {
         this.initialize(fallBackPosition);
-        this.mapObjet.handleLocationError(true, infoWindow, fallBackPosition);
+        this.mapObjet.handleLocationError(true, infoWindow, {
+          lat: fallBackPosition.coords.latitude,
+          lng: fallBackPosition.coords.longitude
+        });
       });
     } else {
       this.initialize(fallBackPosition);
-      this.mapObjet.handleLocationError(false, infoWindow, fallBackPosition);
+      this.mapObjet.handleLocationError(false, infoWindow, {
+        lat: fallBackPosition.coords.latitude,
+        lng: fallBackPosition.coords.longitude
+      });
     }
   }
 
