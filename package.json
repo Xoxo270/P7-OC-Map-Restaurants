@@ -1,0 +1,22 @@
+{
+  "name": "p7-oc-map-restaurants",
+  "version": "1.0.0",
+  "description": "L'application affiche les restaurants proches ainsi que leurs informations ( nom, adresse, notes, type de cuisine...) grâce à l'api Google Maps.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "http-server -p 9000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Xoxo270/P7-OC-Map-Restaurants.git"
+  },
+  "author": "Daoulas Thomas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Xoxo270/P7-OC-Map-Restaurants/issues"
+  },
+  "homepage": "https://github.com/Xoxo270/P7-OC-Map-Restaurants#readme",
+  "dependencies": {
+    "http-server": "^14.1.1"
+  }
+}
